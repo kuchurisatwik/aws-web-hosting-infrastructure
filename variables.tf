@@ -27,3 +27,13 @@ variable "cloudfront_price_class" {
   type        = string
   default     = "PriceClass_100"
 }
+
+
+variable "aws_access_key" {
+  type = string
+}
+
+
+variable "aws_secret_key" {
+  type = string
+}
