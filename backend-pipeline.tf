@@ -166,7 +166,7 @@ resource "aws_codepipeline" "backend_pipeline" {
 
       configuration = {
         ApplicationName      = aws_codedeploy_app.backend_app.name
-        DeploymentGroupName  = aws_codedeploy_deployment_group.backend_dg.name
+        DeploymentGroupName  = aws_codedeploy_deployment_group.backend_dg.deployment_group_name
       }
     }
   }

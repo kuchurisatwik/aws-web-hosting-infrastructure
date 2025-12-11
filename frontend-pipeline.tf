@@ -127,9 +127,7 @@ resource "aws_codebuild_project" "codebuild_project" {
   service_role  = aws_iam_role.codebuild_role.arn
   build_timeout = "5"
   source {
-    type            = "GITHUB"
-    location        = "https://github.com/kuchurisatwik/chatapp.git"
-    git_clone_depth = 1
+    type            = "CODEPIPELINE"
     buildspec       = "frontend/buildspec.yml"
   }
 
