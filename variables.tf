@@ -39,3 +39,12 @@ variable "ami_id" {
   type        = string
   default     = "ami-0c55b159cbfafe1f0" # Amazon Linux 2 AMI (HVM), SSD Volume Type in us-east-1
 }
+
+variable "aws_access_key" {
+  type = string
+}
+
+variable "aws_secret_key" {
+  type = string
+  sensitive = true
+}
