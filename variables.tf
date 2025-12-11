@@ -28,12 +28,14 @@ variable "cloudfront_price_class" {
   default     = "PriceClass_100"
 }
 
-
-variable "aws_access_key" {
-  type = string
+variable "ec2_instance_type" {
+  description = "EC2 instance type"
+  type        = string
+  default     = "t3.micro"
 }
 
-
-variable "aws_secret_key" {
-  type = string
+variable "ami_id" {
+  description = "AMI ID for the EC2 instance"
+  type        = string
+  default     = "ami-0c55b159cbfafe1f0" # Amazon Linux 2 AMI (HVM), SSD Volume Type in us-east-1
 }
