@@ -37,7 +37,7 @@ variable "ec2_instance_type" {
 variable "ami_id" {
   description = "AMI ID for the EC2 instance"
   type        = string
-  default     = "ami-0c55b159cbfafe1f0" # Amazon Linux 2 AMI (HVM), SSD Volume Type in us-east-1
+  default     = "ami-0b0ea68c435eb488d" # Amazon Linux 2 AMI (HVM), SSD Volume Type in us-east-1
 }
 
 variable "aws_access_key" {
