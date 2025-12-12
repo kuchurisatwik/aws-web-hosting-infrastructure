@@ -28,7 +28,6 @@ resource "aws_instance" "this" {
   instance_type = var.ec2_instance_type
   subnet_id     = aws_subnet.public[0].id
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]
-  iam_instance_profile = aws_iam_instance_profile.ec2_instance_profile.name
 
   tags = {
     Name = "tf-ec2-instance"
