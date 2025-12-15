@@ -17,9 +17,3 @@ provider "aws" {
   access_key = var.aws_access_key
   secret_key = var.aws_secret_key
 }
-
-resource "random_string" "suffix" {
-  length  = 8
-  special = false
-  upper   = false
-}
