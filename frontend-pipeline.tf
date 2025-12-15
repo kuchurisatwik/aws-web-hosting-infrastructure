@@ -143,35 +143,8 @@ resource "aws_codebuild_project" "codebuild_project" {
   }
 }
 
-resource "aws_codebuild_project" "invalidate_project" {
-  name         = "invalidate-project"
-  service_role = aws_iam_role.codebuild_role.arn
-  build_timeout = "5"
-
-  artifacts {
-    type = "NO_ARTIFACTS"
-  }
-
-  environment {
-    compute_type = "BUILD_GENERAL1_SMALL"
-    image        = "aws/codebuild/standard:5.0"
-    type         = "LINUX_CONTAINER"
-    environment_variable {
-      name  = "CLOUDFRONT_ID"
-      value = aws_cloudfront_distribution.cdn.id
-    }
-  }
-
-  source {
-    type      = "NO_SOURCE"
-    buildspec = <<-EOF
-      version: 0.2
-      phases:
-        build:
-          commands:
-            - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths "/*"
-    EOF
-  }
+data "aws_codebuild_project" "invalidate_project" {
+  name = "invalidate-project"
 }
 
 resource "aws_codepipeline" "pipeline" {

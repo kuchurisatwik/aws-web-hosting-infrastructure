@@ -10,7 +10,7 @@ data "aws_iam_policy_document" "codedeploy_role_policy" {
 }
 
 resource "aws_iam_role" "codedeploy_role" {
-  name               = "codedeploy-role"
+  name               = "codedeploy-role-new"
   assume_role_policy = data.aws_iam_policy_document.codedeploy_role_policy.json
 }
 
@@ -19,62 +19,23 @@ resource "aws_iam_role_policy_attachment" "codedeploy_role_attachment" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSCodeDeployRole"
 }
 
-resource "aws_iam_role" "ec2_codedeploy_role" {
+data "aws_iam_role" "ec2_codedeploy_role" {
   name = "ec2-codedeploy-role"
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = "sts:AssumeRole"
-        Effect = "Allow"
-        Principal = {
-          Service = "ec2.amazonaws.com"
-        }
-      }
-    ]
-  })
-}
-
-resource "aws_iam_role_policy_attachment" "ec2_codedeploy_policy_attachment" {
-  role       = aws_iam_role.ec2_codedeploy_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforAWSCodeDeploy"
-}
-
-resource "aws_iam_role_policy" "s3_access_policy" {
-  name = "s3-access-policy"
-  role = aws_iam_role.ec2_codedeploy_role.id
-  policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Action = [
-          "s3:GetObject",
-          "s3:GetObjectVersion",
-          "s3:GetBucketVersioning",
-        ],
-        Effect   = "Allow",
-        Resource = [
-          aws_s3_bucket.s3.arn,
-          "${aws_s3_bucket.s3.arn}/*",
-        ]
-      },
-    ]
-  })
 }
 
 resource "aws_iam_instance_profile" "ec2_instance_profile" {
-  name = "ec2-codedeploy-instance-profile"
-  role = aws_iam_role.ec2_codedeploy_role.name
+  name = "ec2-codedeploy-instance-profile-new"
+  role = data.aws_iam_role.ec2_codedeploy_role.name
 }
 
 resource "aws_codedeploy_app" "backend_app" {
   compute_platform = "Server"
-  name             = "backend-codedeploy-app"
+  name             = "backend-codedeploy-app-new"
 }
 
 resource "aws_codedeploy_deployment_group" "backend_dg" {
   app_name              = aws_codedeploy_app.backend_app.name
-  deployment_group_name = "backend-deployment-group"
+  deployment_group_name = "backend-deployment-group-new"
   service_role_arn      = aws_iam_role.codedeploy_role.arn
 
   ec2_tag_filter {
@@ -89,29 +50,12 @@ resource "aws_codedeploy_deployment_group" "backend_dg" {
   }
 }
 
-resource "aws_codebuild_project" "backend_codebuild_project" {
-  name          = "backend-build"
-  service_role  = aws_iam_role.codebuild_role.arn
-  build_timeout = "5"
-  source {
-    type            = "CODEPIPELINE"
-    buildspec       = "backend/buildspec.yml"
-  }
-
-  artifacts {
-    type = "CODEPIPELINE"
-  }
-
-  environment {
-    compute_type                = "BUILD_GENERAL1_SMALL"
-    image                       = "aws/codebuild/standard:5.0"
-    type                        = "LINUX_CONTAINER"
-    image_pull_credentials_type = "CODEBUILD"
-  }
+data "aws_codebuild_project" "backend_codebuild_project" {
+  name = "backend-build"
 }
 
 resource "aws_codepipeline" "backend_pipeline" {
-  name     = "backend-pipeline"
+  name     = "backend-pipeline-new"
   role_arn = aws_iam_role.codepipeline_role.arn
 
   artifact_store {
