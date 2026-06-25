@@ -19,7 +19,7 @@ Files in this folder:
 * `vpc.tf` – VPC, subnets, route tables
 * `s3_cloudfront.tf` – S3 bucket, OAI, bucket policy, CloudFront distribution
 * `ec2.tf` – EC2 instance, security group, optional user-data bootstrap
-* `outputs.tf` – Useful outputs (CloudFront domain, EC2 public IP, SSH command)
+* `outputs.tf` – Useful outputs (CloudFront domain, EC2 public IP, SSH command).
 
 ---
 
