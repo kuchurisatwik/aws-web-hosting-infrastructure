@@ -39,7 +39,7 @@ Files in this folder:
 
 ## Quickstart (example)
 
-1. Initialize Terraform in this folder (downloads providers and modules):
+1. Initialize Terraform in this folder (downloads providers and modules) :
 
 ```bash
 terraform init
