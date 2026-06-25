@@ -1,7 +1,6 @@
 # Terraform: VPC + S3 + CloudFront + EC2 (Backend)
 
 A compact, practical Terraform example that creates a secure static delivery pipeline (S3 + CloudFront) **and** a simple EC2-based backend in the same VPC. This README explains what the code does, how to run it, and recommended production hardening.
-
 ---
 
 ## What this repo provisions:
