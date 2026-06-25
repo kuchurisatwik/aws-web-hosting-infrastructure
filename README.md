@@ -4,7 +4,7 @@ A compact, practical Terraform example that creates a secure static delivery pip
 
 ---
 
-## What this repo provisions-
+## What this repo provisions:
 
 * **VPC** with two public subnets (CIDR blocks included in `variables.tf`).
 * **S3 bucket** for static assets.
